@@ -1,7 +1,12 @@
-= Restaurant app as an example of Spring Boot, Data and Rest
+Restaurant app as an example of Spring Boot, Data and Rest
+==========================================================
 
-== Build
+Build
+-----
+
 `mvn package`
 
-== Run
+Run
+---
+
 `./start`

@@ -1,17 +1,26 @@
-var API  = 'localhost:8080'
+var path = require('path')
+
+var API  = 'http://localhost:8082'
 var PORT = 8081
-var TARGET = __dirname + '/target/META-INF/resources'
+var TARGET = path.resolve(__dirname, 'target/META-INF/resources')
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  context: __dirname + '/src/main',
-  entry: './index.js',
+  context: path.resolve(__dirname, 'src/main'),
+  entry: [
+    './index.js',
+  ],
   output: {
     path: TARGET,
     filename: 'frontend.js'
   },
+  resolve: {
+    extensions: ['','.js','.jsx']
+  },
+  watch: true,
+  devtool: 'source-map',
   module: {
     loaders: [{
       test: /\.jsx?$/,
@@ -19,9 +28,14 @@ module.exports = {
       exclude: /node_modules/,
       query: {
         presets: [
+          'stage-0',
           'es2015',
           'react'
-        ]
+        ],
+        plugins: [
+          'transform-class-properties',
+          'transform-decorators-legacy',
+        ],
       }
     },{
       test: /\.css$/,
@@ -43,7 +57,7 @@ module.exports = {
     inline: true,
     port: PORT,
     contentBase: [
-      __dirname + '/src/static',
+      path.resolve(__dirname, 'src/static'),
       TARGET
     ],
     historyApiFallback: true,
